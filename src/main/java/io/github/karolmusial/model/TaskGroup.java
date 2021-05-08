@@ -3,26 +3,24 @@ package io.github.karolmusial.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
 
 @Entity
-@Table(name = "tasks")
-public class Task {
+@Table(name = "task_groups")
+public class TaskGroup {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotBlank(message = "Task's description must not be empty")
+    @NotBlank(message = "Task group's description must not be empty")
     private String description;
     private boolean done;
-    private LocalDateTime deadline;
-    @Embedded
-    private Audit audit = new Audit();
-    @ManyToOne
-    @JoinColumn(name = "task_group_id")
-    private TaskGroup group;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "group")
+    private Set<Task> tasks;
 
-    public Task() {
+    public TaskGroup() {
     }
 
     public int getId() {
@@ -49,27 +47,17 @@ public class Task {
         this.done = done;
     }
 
-    public LocalDateTime getDeadline() {
-        return deadline;
+    public Set<Task> getTasks() {
+        return tasks;
     }
 
-    void setDeadline(LocalDateTime deadline) {
-        this.deadline = deadline;
+    void setTasks(Set<Task> tasks) {
+        this.tasks = tasks;
     }
 
-    public TaskGroup getGroup() {
-        return group;
-    }
-
-    public void setGroup(TaskGroup group) {
-        this.group = group;
-    }
-
-    public void updateFrom(final Task source) {
+    public void updateFrom(final TaskGroup source) {
         description = source.description;
         done = source.done;
-        deadline = source.deadline;
-        group = source.group;
     }
 }
 
