@@ -1,5 +1,7 @@
 package io.github.karolmusial.model;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
@@ -11,7 +13,8 @@ import java.util.Set;
 public class TaskGroup {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "inc")
+    @GenericGenerator(name = "inc", strategy = "increment")
     private int id;
 
     @NotBlank(message = "Task group's description must not be empty")
