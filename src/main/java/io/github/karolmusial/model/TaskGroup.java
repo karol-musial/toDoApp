@@ -27,8 +27,6 @@ public class TaskGroup {
     @JoinColumn(name = "project_id")
     private Project project;
 
-
-
     public TaskGroup() {
     }
 
@@ -44,7 +42,7 @@ public class TaskGroup {
         return description;
     }
 
-    void setDescription(String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
@@ -60,7 +58,7 @@ public class TaskGroup {
         return tasks;
     }
 
-    void setTasks(Set<Task> tasks) {
+    public void setTasks(Set<Task> tasks) {
         this.tasks = tasks;
     }
 
