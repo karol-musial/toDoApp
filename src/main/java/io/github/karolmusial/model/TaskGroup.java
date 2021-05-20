@@ -62,9 +62,12 @@ public class TaskGroup {
         this.tasks = tasks;
     }
 
-    public void updateFrom(final TaskGroup source) {
-        description = source.description;
-        done = source.done;
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
     }
 }
 
