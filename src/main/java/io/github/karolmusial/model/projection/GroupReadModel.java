@@ -4,7 +4,6 @@ import io.github.karolmusial.model.Task;
 import io.github.karolmusial.model.TaskGroup;
 
 import java.time.LocalDateTime;
-import java.util.Comparator;
 import java.util.Set;
 import java.util.stream.Collectors;
 

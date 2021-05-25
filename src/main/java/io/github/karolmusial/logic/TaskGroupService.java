@@ -5,14 +5,10 @@ import io.github.karolmusial.model.TaskGroupRepository;
 import io.github.karolmusial.model.TaskRepository;
 import io.github.karolmusial.model.projection.GroupReadModel;
 import io.github.karolmusial.model.projection.GroupWriteModel;
-import org.springframework.stereotype.Service;
-import org.springframework.web.context.annotation.RequestScope;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
-@RequestScope
 public class TaskGroupService {
     private TaskGroupRepository repository;
     private TaskRepository taskRepository;
