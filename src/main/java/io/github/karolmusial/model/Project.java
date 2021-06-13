@@ -19,8 +19,11 @@ public class Project {
     private String description;
     @OneToMany(mappedBy = "project")
     private Set<TaskGroup> groups;
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "project")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "project")
     private Set<ProjectStep> steps;
+
+    public Project() {
+    }
 
     public int getId() {
         return id;
@@ -34,7 +37,7 @@ public class Project {
         return description;
     }
 
-    void setDescription(String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 

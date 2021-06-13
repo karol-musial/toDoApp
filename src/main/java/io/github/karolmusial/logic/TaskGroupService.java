@@ -1,5 +1,6 @@
 package io.github.karolmusial.logic;
 
+import io.github.karolmusial.model.Project;
 import io.github.karolmusial.model.TaskGroup;
 import io.github.karolmusial.model.TaskGroupRepository;
 import io.github.karolmusial.model.TaskRepository;
@@ -19,7 +20,11 @@ public class TaskGroupService {
     }
 
     public GroupReadModel createGroup(GroupWriteModel source) {
-        TaskGroup result = repository.save(source.toGroup());
+        return createGroup(source, null);
+    }
+
+    public GroupReadModel createGroup(final GroupWriteModel source, final Project project) {
+        TaskGroup result = repository.save(source.toGroup(project));
         return new GroupReadModel(result);
     }
 
