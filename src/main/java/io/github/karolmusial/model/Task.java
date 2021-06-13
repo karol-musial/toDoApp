@@ -72,7 +72,7 @@ public class Task {
         this.deadline = deadline;
     }
 
-    public TaskGroup getGroup() {
+    TaskGroup getGroup() {
         return group;
     }
 
