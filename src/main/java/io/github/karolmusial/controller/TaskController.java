@@ -20,17 +20,21 @@ import java.util.concurrent.CompletableFuture;
 class TaskController {
     private static final Logger logger = LoggerFactory.getLogger(TaskController.class);
     private final TaskRepository repository;
-    private final TaskService service;
 
-    TaskController(final TaskRepository repository, TaskService service) {
+    TaskController(final TaskRepository repository) {
         this.repository = repository;
-        this.service = service;
+    }
+
+    @PostMapping
+    ResponseEntity<Task> createTask(@RequestBody @Valid Task toCreate) {
+        Task result = repository.save(toCreate);
+        return ResponseEntity.created(URI.create("/" + result.getId())).body(result);
     }
 
     @GetMapping(params = {"!sort", "!page", "!size"})
-    CompletableFuture<ResponseEntity<List<Task>>> readAllTasks() {
+    ResponseEntity<List<Task>> readAllTasks() {
         logger.warn("Exposing all the tasks!");
-        return service.findAllSync().thenApply(ResponseEntity::ok);
+        return ResponseEntity.ok(repository.findAll());
     }
 
     @GetMapping
@@ -53,15 +57,9 @@ class TaskController {
         );
     }
 
-    @PostMapping
-    ResponseEntity<Task> createTask(@RequestBody @Valid Task toCreate){
-        Task result = repository.save(toCreate);
-        return ResponseEntity.created(URI.create("/" + result.getId())).body(result);
-    }
-
     @PutMapping("/{id}")
-    ResponseEntity<Task> updateTask(@PathVariable int id, @RequestBody @Valid Task toUpdate){
-        if(!repository.existsById(id)){
+    ResponseEntity<?> updateTask(@PathVariable int id, @RequestBody @Valid Task toUpdate) {
+        if (!repository.existsById(id)) {
             return ResponseEntity.notFound().build();
         }
         repository.findById(id)
@@ -74,8 +72,8 @@ class TaskController {
 
     @Transactional
     @PatchMapping("/{id}")
-    public ResponseEntity<Task> toggleUpdateTask(@PathVariable int id){
-        if(!repository.existsById(id)){
+    public ResponseEntity<?> toggleTask(@PathVariable int id) {
+        if (!repository.existsById(id)) {
             return ResponseEntity.notFound().build();
         }
         repository.findById(id)

@@ -3,6 +3,7 @@ package io.github.karolmusial.controller;
 import io.github.karolmusial.logic.ProjectService;
 import io.github.karolmusial.model.Project;
 import io.github.karolmusial.model.ProjectStep;
+import io.github.karolmusial.model.projection.GroupWriteModel;
 import io.github.karolmusial.model.projection.ProjectWriteModel;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -40,6 +41,7 @@ class ProjectController {
         }
         service.save(current);
         model.addAttribute("project", new ProjectWriteModel());
+        model.addAttribute("projects", getProject());
         model.addAttribute("message", "Dodano projekt!");
         return "projects";
     }
@@ -63,6 +65,13 @@ class ProjectController {
         } catch (IllegalStateException | IllegalArgumentException e) {
             model.addAttribute("message", "Błąd podczas tworzenia grupy");
         }
+        return "projects";
+    }
+
+    @PostMapping(params = "removeStep")
+    String removeStep(@ModelAttribute("project") ProjectWriteModel current) {
+        int id = current.getSteps().size()-1;
+        current.getSteps().remove(id);
         return "projects";
     }
 

@@ -4,6 +4,7 @@ import io.github.karolmusial.model.Task;
 import io.github.karolmusial.model.TaskGroup;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -18,8 +19,9 @@ public class GroupReadModel {
         description = source.getDescription();
         source.getTasks().stream()
                 .map(Task::getDeadline)
+                .filter(Objects::nonNull)
                 .max(LocalDateTime::compareTo)
-                .ifPresent(date->deadline = date);
+                .ifPresent(date -> deadline = date);
         tasks = source.getTasks().stream()
                 .map(GroupTaskReadModel::new)
                 .collect(Collectors.toSet());
@@ -29,7 +31,7 @@ public class GroupReadModel {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(final int id) {
         this.id = id;
     }
 
@@ -37,7 +39,7 @@ public class GroupReadModel {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
@@ -45,7 +47,7 @@ public class GroupReadModel {
         return deadline;
     }
 
-    public void setDeadline(LocalDateTime deadline) {
+    public void setDeadline(final LocalDateTime deadline) {
         this.deadline = deadline;
     }
 
@@ -53,7 +55,7 @@ public class GroupReadModel {
         return tasks;
     }
 
-    public void setTasks(Set<GroupTaskReadModel> tasks) {
+    public void setTasks(final Set<GroupTaskReadModel> tasks) {
         this.tasks = tasks;
     }
 }
