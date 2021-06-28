@@ -1,5 +1,6 @@
 package io.github.karolmusial.model;
 
+import io.github.karolmusial.model.event.TaskEvent;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -60,8 +61,9 @@ public class Task {
         return done;
     }
 
-    public void setDone(boolean done) {
-        this.done = done;
+    public TaskEvent toggle() {
+        this.done = !this.done;
+        return TaskEvent.changed(this);
     }
 
     public LocalDateTime getDeadline() {
